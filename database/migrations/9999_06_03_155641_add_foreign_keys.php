@@ -16,18 +16,19 @@ class AddForeignKeys extends Migration
         Schema::table('posts', function (Blueprint $table) {   
 
             $table -> foreign('tag_id', 'post-tag') /** post-tag è il nome della relazione*/
-
                     -> references('id')             /** chi va a referenziare*/
                     -> on('tags');                  /** tabella a cui andiamo a referenziare*/
         });
 
         Schema::table('details', function (Blueprint $table) {   
 
+            $table -> primary('post_id');
             $table -> foreign('post_id', 'detail-post') 
-
                     -> references('id')             
                     -> on('posts');                  
         });
+        
+
     }
 
     /**
@@ -37,10 +38,13 @@ class AddForeignKeys extends Migration
      */
     public function down()
     {
+
+
         Schema::table('posts', function (Blueprint $table) {   
 
+           
             $table -> dropForeign('post-tag');
-                  
+                
         });
     }
 }
